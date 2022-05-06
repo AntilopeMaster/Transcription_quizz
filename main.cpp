@@ -1,52 +1,38 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <iterator>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
-template <typename Out>
-void split(const std::string &s, char delim, Out result) {
-    std::istringstream iss(s);
-    std::string item;
-    while (std::getline(iss, item, delim)) {
-        *result++ = item;
-    }
-}
+#include "include/utils.hpp"
 
-std::vector<std::string> split(const std::string &s, char delim) {
-    std::vector<std::string> elems;
-    split(s, delim, std::back_inserter(elems));
-    return elems;
-}
+#include "include/Module.h"
 
-template<typename T>
-void print_vector( const T &vec)
+int main ( int argc, char* argv[] )
 {
-    for ( auto const& elem :vec)
-    {
-        std::cout << elem << std::endl;
-    }
-};
+    QCoreApplication::setAttribute ( Qt::AA_EnableHighDpiScaling );
 
-int main() {
-  std::string line;
-  std::ifstream myfile ("kanas/hiragana/tab.txt");
+    std::list<int> a = {4, 3, 2, 1};
 
-//   std::vector<std::string> vec;
-  if (myfile.is_open())
-  {
-    while ( std::getline (myfile,line) )
+    std::vector<int> b = {4, 3, 2, 1};
+
+    std::map<std::string, int> c = {{"a", 4}, {"b", 3}, {"c", 2}, {"d", 1}};
+
+    Module moduleA ( "/home/pellencst/eee/Transcription_quizz/modules/hiragana/tab.txt" );
+
+    Module moduleB ( "/home/pellencst/eee/Transcription_quizz/modules/katakana/tab.txt" );
+
+
+//    std::cout << a << std::endl;
+//    std::cout << b << std::endl;
+//    std::cout << c << std::endl;
+
+    QGuiApplication app ( argc, argv );
+
+    QQmlApplicationEngine engine;
+    engine.load ( QUrl ( QStringLiteral ( "qrc:/qml/main.qml" ) ) );
+
+    if ( engine.rootObjects().isEmpty() )
     {
-        print_vector(split(line, ' '));
+        return -1;
     }
-    myfile.close();
-  }
-  else
-  {
-    std::cerr << "Unable to open file" << '\n';
-    return 0;
-  }
-  return 0;
+
+    return app.exec();
 }

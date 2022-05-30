@@ -6,7 +6,9 @@
 #include <fstream>
 #include <vector>
 
-Module::Module ( std::string filePath, std::string moduleName )
+Module::Module ( std::string filePath, std::string moduleName ) :
+    m_filePath ( filePath ),
+    m_moduleName ( moduleName )
 {
     std::string line;
     std::ifstream file ( filePath );
@@ -20,12 +22,20 @@ Module::Module ( std::string filePath, std::string moduleName )
         }
 
         file.close();
-        print_map ( m_translations_map );
-
+//        print_map ( m_translations_map );
     }
     else
     {
         std::cerr << "Unable to open file : " << filePath << '\n';
+    }
+
+    if ( !moduleName.empty() )
+    {
+        m_moduleName = moduleName;
+    }
+    else
+    {
+        m_moduleName = split ( split ( filePath, '/' ).back(), '.' ).front();
     }
 }
 
@@ -39,7 +49,35 @@ std::string Module::key ( std::string value ) const
     return it->first;
 }
 
+std::string Module::filePath() const
+{
+    return m_filePath;
+}
+
 std::string Module::moduleName() const
 {
     return m_moduleName;
+}
+
+std::list<std::string> Module::keys() const
+{
+    std::list<std::string> ret;
+
+    std::for_each ( m_translations_map.cbegin(), m_translations_map.cend(), [&ret] ( const std::pair<std::string, std::string> map_element )
+    {
+        ret.push_back ( map_element.first );
+    } );
+
+    return ret;
+}
+
+std::list<std::string> Module::values() const
+{
+    std::list<std::string> ret;
+    std::for_each ( m_translations_map.cbegin(), m_translations_map.cend(), [&ret] ( const std::pair<std::string, std::string> map_element )
+    {
+        ret.push_back ( map_element.second );
+    } );
+
+    return ret;
 }

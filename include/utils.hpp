@@ -9,6 +9,7 @@
 #include <map>
 #include <utility>
 #include <list>
+#include <iterator>
 
 template <typename Out>
 inline void split ( const std::string& s, char delim, Out result )
@@ -40,6 +41,14 @@ std::ostream& operator<< ( std::ostream& stream, const std::vector<T>& vec )
     return stream;
 }
 
+template<typename T, typename S>
+std::ostream& operator<< ( std::ostream& stream, const std::pair<T, S>& pair )
+{
+    stream << pair.first << " " << pair.second << '\n';
+    return stream;
+}
+
+
 template<typename T>
 std::ostream& operator<< ( std::ostream& stream, const std::list<T>& vec )
 {
@@ -48,13 +57,6 @@ std::ostream& operator<< ( std::ostream& stream, const std::list<T>& vec )
         stream << data << '\n';
     }
 
-    return stream;
-}
-
-template<typename T, typename S>
-std::ostream& operator<< ( std::ostream& stream, const std::pair<T, S>& pair )
-{
-    stream << pair.first << " " << pair.second << '\n';
     return stream;
 }
 

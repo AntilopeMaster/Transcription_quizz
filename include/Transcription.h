@@ -13,6 +13,7 @@ class Transcription : public QObject
     Q_OBJECT
 
     Q_PROPERTY ( QQmlListProperty<GraphicalModule> modules READ modules NOTIFY modulesChanged )
+    Q_PROPERTY ( QStringList modulesName READ modulesName NOTIFY modulesChanged )
 public:
     explicit Transcription ( QObject* parent = nullptr );
 
@@ -20,7 +21,9 @@ public:
 
     QQmlListProperty<GraphicalModule> modules();
 
-    Q_INVOKABLE void addModules ( const std::string& filePath );
+    Q_INVOKABLE void addModules ( const QString& filePath, const QString& moduleName = "" );
+
+    QStringList modulesName();
 
 signals:
     void modulesChanged();
@@ -30,7 +33,7 @@ private:
     static GraphicalModule* modulesAt ( QQmlListProperty<GraphicalModule>* list, int index ) ;
 
     QList<QSharedPointer<GraphicalModule>> m_modules;
-
+    QStringList m_modulesName;
 };
 
 #endif // TRANSCRIPTION_H

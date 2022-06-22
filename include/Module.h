@@ -2,7 +2,7 @@
 
 #include <string>
 #include <map>
-#include <list>
+#include <vector>
 
 class Module
 {
@@ -15,14 +15,12 @@ public:
     std::string filePath() const;
     std::string moduleName() const;
 
-    std::list<std::string> keys() const;
+    std::vector<std::string> keys() const;
 
-    std::list<std::string> values() const;
+    std::vector<std::string> values() const;
 
 protected:
     std::map<std::string, std::string> m_translations_map;
-
-//    std::map<std::string, std::string> m_cleanable_translations_map;
 
     std::string m_filePath;
     std::string m_moduleName;

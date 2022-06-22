@@ -1,92 +1,58 @@
 import QtQuick 2.9
-import QtQuick.Window 2.2
-import QtQuick.Controls 2.4
+import QtQuick.Window 2.11
+import QtQuick.Controls 1.5
+
 
 Window {
+    id:  mainWindow
     visible: true
     width: 1280
     height: 720
 
     title: qsTr("Transcription")
 
-    property double scrollPosition: 0.0
+    AddModule {
+        id: addModuleDialog
 
-    Text {
-        id: moduleName
-        width: parent.width
-        height: 20
-        text: transcription.modules[0].moduleName
-        horizontalAlignment: Text.AlignHCenter
+        width: mainWindow.width / 2
+        height: mainWindow.height / 2
     }
 
-    Item {
-        anchors.top: moduleName.bottom
-        anchors.topMargin: 20
-        anchors.bottom: parent.bottom
+
+    ComboBox {
+        id: moduleComboBox
+
+        model : transcription.modulesName
+
+        width: parent.width * 0.3
+        height: parent.height * 0.05
+        anchors.top: parent.top
         anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.leftMargin: parent.width * 0.05
+        anchors.topMargin: parent.height * 0.05 - height / 2
+    }
 
-        ListView {
-            height: parent.height
-            model: transcription.modules[0].keys
-            anchors.right: parent.horizontalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            clip: true
-            interactive: false
+    Button {
+        width: parent.width * 0.3
+        height: parent.height * 0.05
 
-            delegate: Rectangle{
-                width: parent.width
-                height: 20
-                border.width: 1
-                border.color: "black"
-                color: "transparent"
+        anchors.left: moduleComboBox.right
+        anchors.leftMargin: parent.width * 0.05
+        anchors.verticalCenter: moduleComboBox.verticalCenter
 
-                Text {
-                    text: modelData
-                    anchors.fill: parent
-                    horizontalAlignment: Text.AlignHCenter
-                }
-            }
+        text: "Ajouter un module"
 
-            ScrollBar.vertical: ScrollBar {
-                policy: ScrollBar.AlwaysOff
-                position: scrollPosition
-            }
-        }
+        onClicked: addModuleDialog.visible = true
+//        onClicked: transcription.addModules("")
+    }
 
-        ListView {
-            anchors.left: parent.horizontalCenter
-//            width: parent.width / 2
-            height: parent.height
-            anchors.right: parent.right
-            model: transcription.modules[0].values
-            interactive: false
 
-            clip: true
-            delegate: Rectangle{
-                width: parent.width - 20
-                height: 20
-                border.width: 1
-                border.color: "black"
-                color: "transparent"
+    ModuleContent {
+       height: parent.height * 0.9
+       width: parent.width * 0.9
 
-                Text {
-                    text: modelData
-                    anchors.fill: parent
-                    horizontalAlignment: Text.AlignHCenter
-                }
-            }
-            ScrollBar.vertical: ScrollBar {
-                id: scrollBar
-                anchors.right: parent.right
-                width: 20
-                height: parent.height
-                clip: true
-                policy: ScrollBar.AlwaysOn
-
-                onPositionChanged: scrollPosition = position
-            }
-        }
+       anchors.horizontalCenter: parent.horizontalCenter
+       module: transcription.modules[moduleComboBox.currentIndex]
+       anchors.bottom: parent.bottom
     }
 }

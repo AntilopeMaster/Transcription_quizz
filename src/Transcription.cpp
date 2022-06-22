@@ -3,7 +3,7 @@
 
 Transcription::Transcription ( QObject* parent ) : QObject ( parent )
 {
-    addModules ( "/home/pellencst/eee/Transcription_quizz/modules/hiragana/tab.txt" );
+    addModules ( "/home/pellencst/eee/Transcription_quizz/modules/hiragana/tab.module" );
 }
 
 void Transcription::initialize ( QQmlContext& qmlContext )
@@ -18,12 +18,23 @@ QQmlListProperty<GraphicalModule> Transcription::modules()
     return QQmlListProperty<GraphicalModule> ( this, &m_modules, &Transcription::modulesCount, &Transcription::modulesAt );
 }
 
-void Transcription::addModules ( const std::string& filePath )
+void Transcription::addModules ( const QString& filePath,  const QString& moduleName )
 {
-    QSharedPointer<GraphicalModule> module ( new GraphicalModule ( filePath ) );
-    m_modules.push_back ( module );
+    QSharedPointer<GraphicalModule> module ( new GraphicalModule ( filePath.toStdString(), moduleName.toStdString() ) );
 
+    if ( module.isNull() )
+    {
+        return;
+    }
+
+    m_modules.push_back ( module );
+    m_modulesName.push_back ( module->moduleName() );
     emit modulesChanged();
+}
+
+QStringList Transcription::modulesName()
+{
+    return m_modulesName;
 }
 
 int Transcription::modulesCount ( QQmlListProperty<GraphicalModule>* list )

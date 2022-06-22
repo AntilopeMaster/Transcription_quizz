@@ -19,7 +19,7 @@ class GraphicalModule : public QObject, public Module
     Q_PROPERTY ( QStringList values READ values CONSTANT )
 
 public:
-    explicit GraphicalModule ( std::string filepath = "", QObject* parent = nullptr );
+    explicit GraphicalModule ( std::string filepath = "", std::string moduleName = "", QObject* parent = nullptr );
 
     GraphicalModule ( const GraphicalModule& orig );
 

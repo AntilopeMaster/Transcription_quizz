@@ -1,6 +1,6 @@
 #include "include/GraphicalModule.h"
 
-GraphicalModule::GraphicalModule ( std::string filepath, QObject* parent ) : QObject ( parent ), Module ( filepath )
+GraphicalModule::GraphicalModule ( std::string filepath, std::string moduleName, QObject* parent ) : QObject ( parent ), Module ( filepath, moduleName )
 {
 
 }

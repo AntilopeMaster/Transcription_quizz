@@ -75,7 +75,7 @@ std::ostream& operator<< ( std::ostream& stream, const std::map<T, S>& vec )
 template<typename T>
 void print_map ( const T& vec )
 {
-    for ( auto const& elem : vec )
+    for ( const auto& elem : vec )
     {
         std::cout << elem.first << " " << elem.second << std::endl;
     }

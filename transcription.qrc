@@ -3,5 +3,8 @@
         <file>qml/main.qml</file>
         <file>qml/ModuleContent.qml</file>
         <file>qml/AddModule.qml</file>
+        <file>qml/AskTranslation.qml</file>
+        <file>resources/svg/object-select-symbolic.svg</file>
+        <file>resources/svg/window-close-symbolic.svg</file>
     </qresource>
 </RCC>

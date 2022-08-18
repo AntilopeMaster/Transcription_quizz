@@ -47,9 +47,40 @@ Window {
     }
 
 
-    ModuleContent {
-       height: parent.height * 0.9
-       width: parent.width * 0.9
+    Item {
+        height: parent.height * 0.9
+        width: parent.width * 0.9
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+
+        state: "ASK_TRANSLATIONS"
+
+        states: [
+            State {
+                name: "ASK_TRANSLATIONS"
+                PropertyChanges {target: moduleContentScreen; visible: false}
+                PropertyChanges {target: askTranslationScreen; visible: true}
+            },
+            State {
+                name: "SHOW_MODULES"
+                PropertyChanges {target: moduleContentScreen; visible: false}
+                PropertyChanges {target: askTranslationScreen; visible: true}
+            }
+        ]
+
+        ModuleContent {
+            id: moduleContentScreen
+            anchors.fill: parent
+
+            module: transcription.modules[moduleComboBox.currentIndex]
+        }
+
+        AskTranslation {
+            id: askTranslationScreen
+            anchors.fill: parent
+
+            module: transcription.modules[moduleComboBox.currentIndex]
+        }
 
        anchors.horizontalCenter: parent.horizontalCenter
        module: transcription.modules ? transcription.modules[moduleComboBox.currentIndex] : null

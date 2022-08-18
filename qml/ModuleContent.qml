@@ -9,7 +9,7 @@ Item {
     property QtObject module: null
 
     Text {
-        id: moduleName
+        id: moduleNameText
         width: parent.width
         height: 20
         text: module ? module.moduleName : ""
@@ -17,7 +17,7 @@ Item {
     }
 
     Item {
-        anchors.top: moduleName.bottom
+        anchors.top: moduleNameText.bottom
         anchors.topMargin: 20
         anchors.bottom: parent.bottom
         anchors.left: parent.left

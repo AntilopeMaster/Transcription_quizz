@@ -13,7 +13,7 @@ Window {
         width: addModuleDialog.width * 0.6
         height: addModuleDialog.height * 0.6
         title: "Choisissez un fichier de module"
-        folder: shortcuts.home
+//        folder: shortcuts.home
         nameFilters: ["Modules files (*.module)"]
         onAccepted: {
            console.log("You chose: " + fileDialog.fileUrl)
@@ -88,12 +88,15 @@ Window {
                 width: parent.width * 0.6
                 height: parent.height * 0.5
 
-                enabled: fileDialog.fileUrl !== "" && moduleNameInput.text !== ""
+                enabled: {
+                    return fileDialog.fileUrl.toString() !== ""
+                }
 
                 text: "Ajouter le module"
 
                 onClicked: {
                     transcription.addModules(fileDialog.fileUrl, moduleNameInput.text)
+                    addModuleWindow.close()
                 }
             }
         }

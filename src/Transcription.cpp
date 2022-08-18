@@ -3,7 +3,7 @@
 
 Transcription::Transcription ( QObject* parent ) : QObject ( parent )
 {
-    addModules ( "/home/pellencst/eee/Transcription_quizz/modules/hiragana/tab.module" );
+//    addModules ( "/home/pellencst/eee/Transcription_quizz/modules/hiragana/tab.module" );
 }
 
 void Transcription::initialize ( QQmlContext& qmlContext )

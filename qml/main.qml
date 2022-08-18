@@ -52,7 +52,7 @@ Window {
        width: parent.width * 0.9
 
        anchors.horizontalCenter: parent.horizontalCenter
-       module: transcription.modules[moduleComboBox.currentIndex]
+       module: transcription.modules ? transcription.modules[moduleComboBox.currentIndex] : null
        anchors.bottom: parent.bottom
     }
 }
